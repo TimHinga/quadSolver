@@ -12,3 +12,6 @@ to the program by the user.
 Insructions
 ---------------
 **TBD**
+
+Commands
+---------------
