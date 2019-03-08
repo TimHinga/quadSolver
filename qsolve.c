@@ -9,10 +9,10 @@ int main(int argc, char **argv){
     float abc[3];
     char userInput[100];
     
-    printf("COMMAND LINE QUADRATIC SOLVER\nBy Tim Hinga and Andrew Crowley\nVERSION 1.0\nType \"help\" for more information\n\n");
+    printf("COMMAND LINE QUADRATIC SOLVER\nBy Tim Hinga and Andrew Crowley\nVERSION 1.0\nType \"help\" for more information\nType \"q\" to quit program\n");
     
     
-    do {
+    while (strcmp(userInput, "q") != 0){
         do {
        
         printf("Enter coefficients a, b and c (separated each by a space): ");
@@ -26,6 +26,10 @@ int main(int argc, char **argv){
             //printHelpMessage();
             printf("help!!!!!!!!!!!\n\n");
             
+        }
+        else if (strcmp(userInput, "q") == 0) {
+            printf("\nExiting Quadratic Solver...done\n");
+            return 0;
         }
         else {
             
@@ -78,16 +82,9 @@ int main(int argc, char **argv){
         
         
         
-        printf("\nRun Quadratic Solver Again? ('y' for Yes, 'n' for No) : ");
-       fgets(userInput, 100, stdin);
-       // printf("%s\n", userInput);
-       userInput[strlen(userInput) - 1] = 0;
-        
-        
-        
-    } while (strcmp(userInput, "y") == 0);
+       
     
-    printf("\nExiting Quadratic Solver... done.\n");
+    }
     
     
     
