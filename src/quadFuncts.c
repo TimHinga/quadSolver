@@ -87,9 +87,10 @@ int quadSolve(float a, float b, float c, float *root1, float *root2) {
             retVal = approxZero(discriminant);
         }
 
-    	else
+    	else {
     		printf("No real roots present.\n");
     		retVal = 0;
+	}
 	}
 	return retVal;
 }
