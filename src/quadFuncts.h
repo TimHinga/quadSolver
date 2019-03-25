@@ -7,7 +7,9 @@
 
 extern void userInput(float *a, float *b, float *c);
 extern void helpFunction();
-extern void quadSolve(float a, float b, float c, float *root1, float *root2);
+extern int quadSolve(float a, float b, float c, float *root1, float *root2);
+
+int approxZero(float z);
 extern int runAgain();
 
 
