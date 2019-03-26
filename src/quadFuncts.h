@@ -8,8 +8,9 @@
 extern void userInput(float *a, float *b, float *c);
 extern void helpFunction();
 extern int quadSolve(float a, float b, float c, float *root1, float *root2);
+extern float citardauqFormula(float a, float b, float c, int positive);
 
-int approxZero(float z);
+extern int approxZero(float z);
 extern int runAgain();
 
 

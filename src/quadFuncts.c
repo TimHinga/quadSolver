@@ -1,6 +1,5 @@
 #include "quadFuncts.h"
 
-//#define MAC //comment this line out if on Windows
 
 /** Function that will receive user input, and assign the floats to pointed to in parameters.
 */
@@ -9,32 +8,20 @@ void userInput(float *a, float *b, float *c) {
 	char input[100];
 
 	printf("Enter coefficients a, b and c (separated each by a space): ");
-    #ifdef MAC
-    fpurge(stdin);
-    #else
+
     fflush(stdin);
-    #endif
-    
     fgets(input, 100, stdin);  //Get a line of input
 
     while (sscanf(input, "%f %f %f", a, b, c) != 3) { //Check for 3 floats.
     	if (strncmp(input, "help", 4) == 0) { //Check for help command.
     		helpFunction();
-    		#ifdef MAC
-    		fpurge(stdin);
-    		#else
-    		fflush(stdin);
-    		#endif	
+    		fflush(stdin);	
     		printf("Enter coefficients a, b and c (separated each by a space): ");  //Return to trying to get user input.
     		fgets(input, 100, stdin);
     	}
     	else {
     		printf("Error in formatting. Please enter 3 real numbers. \n> ");  //Warning & receive user input again.
-    		#ifdef MAC
-    		fpurge(stdin);
-    		#else
     		fflush(stdin);
-    		#endif
     		fgets(input, 100, stdin);
     	}
     }
@@ -43,14 +30,16 @@ void userInput(float *a, float *b, float *c) {
 
 //Simple help function to assist the user.
 void helpFunction() {
-	printf("To use: simply provide 3 IEEE-Floating Point 32 bit normalized values, with no more than 8 decimal places, each with a space in between. The program will handle the rest.\n");
+	printf("To use: simply provide 3 IEEE-Floating Point 32 bit normalized values, with no more than 6 decimal places, "
+        "each with a space in between. If more than 6 decimals are entered, complete precision will not be guaranteed. "
+        "The program will handle the rest.\n");
 }
 
 
 int quadSolve(float a, float b, float c, float *root1, float *root2) {
 
 	float discriminant;
-	int retVal;
+	int retVal = 0;
 	printf("\nThe quadratic function to be solved: %fx^2 + %fx + %f\n\n", a, b, c);
 
 	if (a == 0) {
@@ -68,14 +57,19 @@ int quadSolve(float a, float b, float c, float *root1, float *root2) {
 
    		discriminant = (b*b) - (4*a*c);
 
-		// condition for real and different rootsq
+		// condition for real and different roots
     	if (discriminant > 0) {
-            	// sqrt() function returns square root
-            	*root1 = (-b+sqrt(discriminant))/(2*a);
-            	*root2 = (-b-sqrt(discriminant))/(2*a);
+            if (b > 0) {
+                *root1 = (-b-sqrtf(discriminant))/(2*a);
+                *root2 = citardauqFormula(a,b,c, 0);
+            }
+            else {
+                *root1 = (-b+sqrtf(discriminant))/(2*a);
+                *root2 = citardauqFormula(a,b,c, 1);
+            }
     
-            	printf("x1 = %f\nx2 = %f\n", *root1 , *root2);
-            	retVal = 2;
+            printf("x1 = %f\nx2 = %f\n", *root1 , *root2);
+            retVal = 0;
             
         }
 
@@ -95,6 +89,15 @@ int quadSolve(float a, float b, float c, float *root1, float *root2) {
 	return retVal;
 }
 
+float citardauqFormula(float a, float b, float c, int positive) {
+    float r = sqrtf(b*b - 4*a*c);
+    if (positive) {
+        return ((2*c) / (-b+r));
+    }
+    else
+        return ((2*c) / (-b-r));
+}
+
 
 int runAgain() {
 	char input[10];
@@ -103,11 +106,7 @@ int runAgain() {
 
 	printf("\nRun Quadratic Solver Again? ('y' for Yes, 'n' for No) : ");
     
-    #ifdef MAC
-    fpurge(stdin);
-    #else
-    fflush(stdin);
-    #endif   
+    fflush(stdin); 
     fgets(input, 10, stdin);
     
     while (loop) {
@@ -116,7 +115,7 @@ int runAgain() {
     		retVal = 1;
     	}
     	else if (strncmp(input, "n", 1) == 0) {
-    		printf("Exiting...");
+    		printf("Exiting...\n");
     		loop = retVal = 0;
     	}
     	else {
@@ -133,7 +132,7 @@ int runAgain() {
     return retVal;
 }
 
-//returns 1 if z is within 0.0000001 of zero, els returns 0
+//returns 1 if z is within 0.0000001 of zero, else returns 0
 int approxZero(float z){
 	return (z < 0.0000001 && z > -0.0000001)? 1 : 0;
 }
