@@ -1,0 +1,3 @@
+Version Control
+
+For version control we are using GitHub to keep track of any changes that were made, and merging those changes to one complete master branch.
