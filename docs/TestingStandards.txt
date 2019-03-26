@@ -1,3 +1,5 @@
 TESTING STANDARDS
 
-**not sure what to put here**
+We are using CUnit testing standards and practices.
+
+http://cunit.sourceforge.net/
