@@ -11,7 +11,7 @@ to the program by the user.
 
 Insructions
 ---------------
-**TBD**
+To use program, simply enter in 3 IEEE Floating Point normalized values, each separated by a space, and then the program will take those numbers and output the resulting roots of those numbers.
 
 Commands
 ---------------
