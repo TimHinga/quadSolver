@@ -1,0 +1,17 @@
+The Citardauq Equation
+
+	Suppose that our quadratic equation has two real roots. and |4ac|
+is very small compared to b^2. If we want to find the larger root, use the Quadratic Formula. For the smaller root, we get less, sometimes much less, loss of precision by using the Citardauq Formula.
+
+This equation is found by taking the Quadratic formula and multiplying both the top and bottom by -b _+ sqrt(b^2 - 4ac).
+
+This yields: 2c/-b -+ sqrt(b^2 - 4ac).
+
+Cardinal sin of numerical analysis: subtracting two numbers that are very close to one another. The more similar two numbers are, the more precision you can lose from subtracting them.
+
+To avoid loss of precision when |4ac| is very sall compared to b^2, find the larger root via the quadratic formula and find the smaller root via the citardauq formula.
+
+Some useful links for this information:
+
+https://math.stackexchange.com/questions/56942/precision-of-operations-on-approximations
+https://www.johndcook.com/blog/2018/04/28/quadratic-formula/
