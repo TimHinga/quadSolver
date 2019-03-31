@@ -1,16 +1,16 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "inputReader.h"
+#include "qsGetLine.h"
 
 
 /**
- * Returns a quadConstants pointer
+ * Returns a constants pointer
  * On error returns NULL
  **/
-quadConstants* readFromConsole()
+constants * readLine()
 {
-    quadConstants * line = (quadConstants*)malloc(sizeof(quadConstants));
+    constants * line = (constants*)malloc(sizeof(constants));
     printf("Ax^2 + Bx + C = 0\nPlease enter a, b, and c seperated by one space(or q to exit):\n");
     char lineBuff[1024];
     fgets(lineBuff,1023,stdin);
