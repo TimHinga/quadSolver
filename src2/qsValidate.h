@@ -2,6 +2,6 @@
 #ifndef INPUTVALIDATION_H
 #define INPUTVALIDATION_H
 
-float validateInput(char * input); 
+float validate(char * input); 
 
 #endif
