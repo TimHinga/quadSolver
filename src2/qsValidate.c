@@ -2,10 +2,10 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "inputValidation.h"
+#include "qsValidate.h"
 
 
-float validateInput(char * input){
+float validate(char * input){
 
 float number; 
 
