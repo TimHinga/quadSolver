@@ -13,6 +13,6 @@ int isDeterminantNegative(double a, double b, double c);
 
 int approxZero(double z);
 
-int printWarnings(double a, double b, double c, double x1, double x2);
+int displayWarnings(double a, double b, double c, double x1, double x2);
 
 #endif
