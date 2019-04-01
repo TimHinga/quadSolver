@@ -7,4 +7,4 @@ qsolve: qsolve.o quadFuncts.o
 quadFuncts: quadFuncts.h
 
 clean: 
-	rm -f *.o core qsolve
+	rm -f *.o core qsolve *Test tests/functionalTestActual.txt CUnit*.xml
