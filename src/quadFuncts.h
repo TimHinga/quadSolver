@@ -4,13 +4,18 @@
 #include <string.h>
 #include <stdio.h>
 #include <math.h>
+#include <stdlib.h>
+#include <sys/errno.h>
+#include <float.h>
 
-extern void userInput(float *a, float *b, float *c);
-extern void helpFunction();
-extern int quadSolve(float a, float b, float c, float *root1, float *root2);
-extern float citardauqFormula(float a, float b, float c, int positive);
+extern int qsGetLine(char *line, int nline);
+extern int qsValidate(char *line, int nline, double *a, double *b, double *c);
+extern void qsHelp();
+extern int qsSolve(double a, double b, double c, double *root1, double *root2); 
+extern double citardauqFormula(double a, double b, double c, int positive);
+extern int qsResults(double x1, double x2, int i); 
 
-extern int approxZero(float z);
+extern int approxZero(double z);
 extern int runAgain();
 
 

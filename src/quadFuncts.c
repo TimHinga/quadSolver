@@ -1,102 +1,169 @@
 #include "quadFuncts.h"
 
-
-/** Function that will receive user input, and assign the floats to pointed to in parameters.
-*/
-void userInput(float *a, float *b, float *c) {
-
-	char input[100];
-
-	printf("Enter coefficients a, b and c (separated each by a space): ");
-
+int qsGetLine(char *line, int nline) {
+    int retVal = 0;
+    printf("Enter coefficients a b c (each separated by a space): ");
     fflush(stdin);
-    fgets(input, 100, stdin);  //Get a line of input
-
-    while (sscanf(input, "%f %f %f", a, b, c) != 3) { //Check for 3 floats.
-    	if (strncmp(input, "help", 4) == 0) { //Check for help command.
-    		helpFunction();
-    		fflush(stdin);	
-    		printf("Enter coefficients a, b and c (separated each by a space): ");  //Return to trying to get user input.
-    		fgets(input, 100, stdin);
-    	}
-    	else {
-    		printf("Error in formatting. Please enter 3 real numbers. \n> ");  //Warning & receive user input again.
-    		fflush(stdin);
-    		fgets(input, 100, stdin);
-    	}
+    if (fgets(line, nline, stdin) == NULL) {
+        retVal = -1;
     }
 
+    return retVal;
+}
+
+int qsValidate(char *line, int nline, double *a, double *b, double *c) {
+    int retVal = 0;
+
+    char *token;
+    //char *endptr;
+    token = strtok(line, " ");
+    int n = 0;
+    int decimalDigits = 0;
+    double temp = 0;
+
+    if (!strncmp(token, "help", 4)) {
+        retVal = 1;
+        token = NULL;
+    }
+
+    while (token) {
+        for (int i = 0; i < strlen(token) && i < nline; i++) {
+            if ( (int) token[i] == (int) '.' ) {
+                decimalDigits = strlen(token) - (i+1);      //Count number of digits after the decimal.
+                i = strlen(token);
+            }
+        }
+
+        if (decimalDigits > 8) {     //If more than 8 digits
+            printf("Please make sure all numbers have 8 or less decimal places.\n");
+            retVal = -1;
+            token = NULL;
+        }
+
+        else {
+            errno = 0;
+            char *endptr;
+            printf("%s\n", token);
+            temp = strtod(token, &endptr);
+            if (errno != 0 || *endptr != '\0') {     //If the string is an invalid input. E.g. has non-numeric characters.
+                printf("Invalid inputs.\n");
+                retVal = -1;
+                token = NULL;
+            }
+            else if (temp > FLT_MAX || temp < FLT_MIN) {    //If the string is not within the range of floats.
+                printf("Please provide inputs within the range of 32 bit floating points.\n");
+                retVal = -1;
+                token = NULL;
+            }
+
+            else {     //String is all good to go, check next input.
+                token = strtok(NULL, " ");
+                switch (n) {
+                    case 0: 
+                        *a = temp;
+                        break;
+                    case 1: 
+                        *b = temp;
+                        break;
+                    case 2:
+                        *c = temp;
+                        break;
+                    default:
+                        printf("Please enter only 3 inputs for a b c\n");
+                        retVal = -1;
+                        token = NULL;
+                        break;
+                    }
+                n++;
+            }
+        }
+    }
+    return retVal;
 }
 
 //Simple help function to assist the user.
-void helpFunction() {
-	printf("To use: simply provide 3 IEEE-Floating Point 32 bit normalized values, with no more than 6 decimal places, "
-        "each with a space in between. If more than 6 decimals are entered, complete precision will not be guaranteed. "
-        "The program will handle the rest.\n");
+void qsHelp() {
+    printf("To use: simply provide 3 IEEE-Floating Point 32 bit normalized values, with no more than 8 decimal places, "
+        "each with a space in between.\n");
 }
 
+int qsSolve(double a, double b, double c, double *root1, double *root2) {
 
-int quadSolve(float a, float b, float c, float *root1, float *root2) {
+    double discriminant;
+    int retVal = 0;
 
-	float discriminant;
-	int retVal = 0;
-	printf("\nThe quadratic function to be solved: %fx^2 + %fx + %f\n\n", a, b, c);
+    printf("\nThe quadratic function to be solved: %.8lfx^2 + %.8lfx + %.8lf\n\n", a, b, c);
 
-	if (a == 0) {
-		if (b == 0) {
-			if (c == 0)
-				printf("All real numbers are roots.\n");
-			else
-				printf("Unsolvable equation.\n");
-		}
-		else
-			printf("This is a linear equation with root = %f\n", -c/b);
-	}
+    if (approxZero(a)) {
+        if (approxZero(b)) {
+            if (approxZero(c))
+                printf("All real numbers are roots.\n");
+            else
+                printf("Unsolvable equation.\n");
+        }
+        else
+            printf("This is a linear equation with root = %lf\n", -c/b);
+    }
 
-	else { 
+    else { 
+        discriminant = (b*b) - (4*a*c);
 
-   		discriminant = (b*b) - (4*a*c);
-
-		// condition for real and different roots
-    	if (discriminant > 0) {
+        // condition for real and different roots
+        if (discriminant > 0) {
             if (b > 0) {
-                *root1 = (-b-sqrtf(discriminant))/(2*a);
+                *root1 = (-b-sqrt(discriminant))/(2*a);
                 *root2 = citardauqFormula(a,b,c, 0);
             }
             else {
-                *root1 = (-b+sqrtf(discriminant))/(2*a);
+                *root1 = (-b+sqrt(discriminant))/(2*a);
                 *root2 = citardauqFormula(a,b,c, 1);
             }
-    
-            printf("x1 = %f\nx2 = %f\n", *root1 , *root2);
-            retVal = 0;
-            
+            retVal = 1;        
         }
 
-    	//condition for real and equal roots
-    	else if (discriminant == 0) {
+        //condition for real and equal roots
+        else if (discriminant == 0) {
             *root1 = *root2 = -b/(2*a);
-    
-            printf("x1 = x2 = %.2lf\n", *root1);
-            retVal = approxZero(discriminant);
+            retVal = 2;
         }
 
-    	else {
-    		printf("No real roots present.\n");
-    		retVal = 0;
-	}
-	}
-	return retVal;
+        else
+            retVal = 3;
+    }
+    return retVal;
 }
 
-float citardauqFormula(float a, float b, float c, int positive) {
-    float r = sqrtf(b*b - 4*a*c);
+double citardauqFormula(double a, double b, double c, int positive) {
+    double r = sqrt(b*b - 4*a*c);
     if (positive) {
         return ((2*c) / (-b+r));
     }
     else
         return ((2*c) / (-b-r));
 }
+
+int qsResults(double x1, double x2, int i) {
+
+    int retVal = 0;
+
+    switch (i) {
+        case 1:
+            printf("Equation has two unique real roots:\nx1 : %.8lf\nx2 : %.8lf\n", x1, x2);
+            break;
+        case 2:
+            printf("Equation has identical roots:\nx1 = x2 = %.8lf\n", x1);
+            break;
+        case 3:
+            printf("Equation has no real roots.\n");
+            break;
+        default:
+            printf("Internal Error.");
+            retVal = -1;
+        }
+
+    return retVal;
+}
+
 
 
 int runAgain() {
@@ -133,7 +200,7 @@ int runAgain() {
 }
 
 //returns 1 if z is within 0.0000001 of zero, else returns 0
-int approxZero(float z){
+int approxZero(double z){
 	return (z < 0.0000001 && z > -0.0000001)? 1 : 0;
 }
 

@@ -1,22 +1,42 @@
-#include <stdio.h>
-#include <math.h>
-#include <string.h>
 #include "quadFuncts.h"
 
 int main(int argc, char **argv){
     
-    float root1, root2;
-    float abc[3];
+    double x1, x2;
+    double a, b, c;
     int loop = 1;
+
+    char line[100];
+
+    int i;
     
     printf("COMMAND LINE QUADRATIC SOLVER\nBy Tim Hinga and Andrew Crowley\nVERSION 1.0\nType \"help\" for more information\n\n");
 
     
     do {
-        userInput(&abc[0], &abc[1], &abc[2]);
-        quadSolve(abc[0], abc[1], abc[2], &root1, &root2);
+        
+        if (qsGetLine(line, 100)) {
+            printf("Failed to receive user inputs.");
+        }
 
-        loop = runAgain();
+        while ((i = qsValidate(line, 100, &a, &b, &c)) != 0) {
+            if (i == 1)
+                qsHelp();
+            if (qsGetLine(line, 100))
+                printf("Failed to receive user inputs.");
+        }        
+
+        i = qsSolve(a, b, c, &x1, &x2);
+        if (i) {
+            if (qsResults(x1, x2, i))
+                loop = 0;
+            else
+                loop = runAgain();
+        }
+        else
+            loop = runAgain();
 
     } while(loop);
+
+    return 0;
 }
