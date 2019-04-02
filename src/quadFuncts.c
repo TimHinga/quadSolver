@@ -7,7 +7,7 @@ int qsGetLine(char *line, int nline) {
     if (fgets(line, nline, stdin) == NULL) {
         retVal = -1;
     }
-
+    line[strlen(line)-1] = '\0';
     return retVal;
 }
 
@@ -15,7 +15,7 @@ int qsValidate(char *line, int nline, double *a, double *b, double *c) {
     int retVal = 0;
 
     char *token;
-    //char *endptr;
+    char *endptr;
     token = strtok(line, " ");
     int n = 0;
     int decimalDigits = 0;
@@ -36,22 +36,23 @@ int qsValidate(char *line, int nline, double *a, double *b, double *c) {
 
         if (decimalDigits > 8) {     //If more than 8 digits
             printf("Please make sure all numbers have 8 or less decimal places.\n");
+            n = 3;
             retVal = -1;
             token = NULL;
         }
 
         else {
             errno = 0;
-            char *endptr;
-            printf("%s\n", token);
             temp = strtod(token, &endptr);
             if (errno != 0 || *endptr != '\0') {     //If the string is an invalid input. E.g. has non-numeric characters.
                 printf("Invalid inputs.\n");
+                n = 3;
                 retVal = -1;
                 token = NULL;
             }
-            else if (temp > FLT_MAX || temp < FLT_MIN) {    //If the string is not within the range of floats.
+            else if (temp > FLT_MAX || temp < -FLT_MAX) {    //If the string is not within the range of floats.
                 printf("Please provide inputs within the range of 32 bit floating points.\n");
+                n = 3;
                 retVal = -1;
                 token = NULL;
             }
@@ -77,6 +78,10 @@ int qsValidate(char *line, int nline, double *a, double *b, double *c) {
                 n++;
             }
         }
+    }
+    if (n < 3) {
+        printf("Please enter 3 inputs for a b c\n");
+        retVal = -1;
     }
     return retVal;
 }
