@@ -1,7 +1,7 @@
 CODING STANDARDS
 
 
-We have chosen to use C99 coding standards, which can be found here:
+We have chosen to use C11 coding standards, which can be found here:
 https://www.gnu.org/prep/standards/html_node/Writing-C.html
 
 
