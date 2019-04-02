@@ -1,0 +1,49 @@
+COMMAND LINE QUADRATIC SOLVER
+By Tim Hinga and Andrew Crowley
+VERSION 1.0
+Type "help" for more information
+
+Enter coefficients a b c (each separated by a space): 
+The quadratic function to be solved: 1.00000000x^2 + 4.00000000x + 3.00000000
+
+Equation has two unique real roots:
+x1 : -3.00000000
+x2 : -1.00000000
+
+Run Quadratic Solver Again? ('y' for Yes, 'n' for No) : Enter coefficients a b c (each separated by a space): 
+The quadratic function to be solved: 1.00000000x^2 + 6.00000000x + 9.00000000
+
+Equation has identical roots:
+x1 = x2 = -3.00000000
+
+Run Quadratic Solver Again? ('y' for Yes, 'n' for No) : Enter coefficients a b c (each separated by a space): 
+The quadratic function to be solved: 2.00000000x^2 + 4.00000000x + 2.00000000
+
+Equation has identical roots:
+x1 = x2 = -1.00000000
+
+Run Quadratic Solver Again? ('y' for Yes, 'n' for No) : Enter coefficients a b c (each separated by a space): 
+The quadratic function to be solved: 1.00000000x^2 + 5.50000000x + 9.00000000
+
+Equation has no real roots.
+
+Run Quadratic Solver Again? ('y' for Yes, 'n' for No) : Enter coefficients a b c (each separated by a space): 
+The quadratic function to be solved: 1.00000000x^2 + 7.00000000x + 9.00000000
+
+Equation has two unique real roots:
+x1 : -5.30277564
+x2 : -1.69722436
+
+Run Quadratic Solver Again? ('y' for Yes, 'n' for No) : Enter coefficients a b c (each separated by a space): 
+The quadratic function to be solved: 1.00000000x^2 + 6.00100000x + 9.00000000
+
+Equation has two unique real roots:
+x1 : -3.05527454
+x2 : -2.94572546
+
+Run Quadratic Solver Again? ('y' for Yes, 'n' for No) : Enter coefficients a b c (each separated by a space): 
+The quadratic function to be solved: 1.00000000x^2 + 5.99000000x + 9.00000000
+
+Equation has no real roots.
+
+Run Quadratic Solver Again? ('y' for Yes, 'n' for No) : Exiting...

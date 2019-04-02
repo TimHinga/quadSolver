@@ -1,0 +1,42 @@
+COMMAND LINE QUADRATIC SOLVER
+By Tim Hinga and Andrew Crowley
+VERSION 1.0
+Type "help" for more information
+
+Enter coefficients a, b and c (separated each by a space): 4.0 5.0 6.0
+
+The quadratic function to be solved: 4.000000x^2 + 5.000000x + 6.000000
+
+No real roots present.
+
+Run Quadratic Solver Again? ('y' for Yes, 'n' for No) : y
+Enter coefficients a, b and c (separated each by a space): 7.5 12 514
+
+The quadratic function to be solved: 7.500000x^2 + 12.000000x + 514.000000
+
+No real roots present.
+
+Run Quadratic Solver Again? ('y' for Yes, 'n' for No) : y
+Enter coefficients a, b and c (separated each by a space): fdf 121 5132
+Error in formatting. Please enter 3 real numbers. 
+> 51242 gdg 61324
+Error in formatting. Please enter 3 real numbers. 
+> 999 4142 fefre
+Error in formatting. Please enter 3 real numbers. 
+> 1020 23.412 .53523
+The quadratic function to be solved: 1020.000000x^2 + 23.412001x + 0.535230
+
+No real roots present.
+
+Run Quadratic Solver Again? ('y' for Yes, 'n' for No) : y
+Enter coefficients a, b and c (separated each by a space): 3 4
+Error in formatting. Please enter 3 real numbers. 
+> 1
+Error in formatting. Please enter 3 real numbers. 
+> 12.3234543 56.345345 987.987
+The quadratic function to be solved: 12.323454x^2 + 56.345345x + 987.987000
+
+No real roots present.
+
+Run Quadratic Solver Again? ('y' for Yes, 'n' for No) : n
+Exiting...
