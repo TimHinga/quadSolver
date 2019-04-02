@@ -19,19 +19,25 @@ int qsValidate(char *line, int nline, double *a, double *b, double *c) {
     token = strtok(line, " ");
     int n = 0;
     int decimalDigits = 0;
+    int precisionLossFlag = 0;
     double temp = 0;
 
     if (!strncmp(token, "help", 4)) {
         retVal = 1;
         token = NULL;
+        return retVal;
     }
 
     while (token) {
-        for (int i = 0; i < strlen(token) && i < nline; i++) {
+        int i;
+        for (i = 0; i < strlen(token) && i < nline; i++) {
             if ( (int) token[i] == (int) '.' ) {
                 decimalDigits = strlen(token) - (i+1);      //Count number of digits after the decimal.
                 i = strlen(token);
             }
+        }
+        if (decimalDigits >= 6 && decimalDigits <= 8){
+            precisionLossFlag = 1;
         }
 
         if (decimalDigits > 8) {     //If more than 8 digits
@@ -40,6 +46,7 @@ int qsValidate(char *line, int nline, double *a, double *b, double *c) {
             retVal = -1;
             token = NULL;
         }
+        
 
         else {
             errno = 0;
@@ -83,6 +90,9 @@ int qsValidate(char *line, int nline, double *a, double *b, double *c) {
         printf("Please enter 3 inputs for a b c\n");
         retVal = -1;
     }
+    if (precisionLossFlag == 1) {
+        printf("!!!!WARNING: Possible loss of precision with this answer.\n");
+    }
     return retVal;
 }
 
@@ -98,7 +108,8 @@ int qsSolve(double a, double b, double c, double *root1, double *root2) {
     int retVal = 0;
 
     printf("\nThe quadratic function to be solved: %.8lfx^2 + %.8lfx + %.8lf\n\n", a, b, c);
-
+    
+    
     if (approxZero(a)) {
         if (approxZero(b)) {
             if (approxZero(c))
@@ -208,56 +219,6 @@ int runAgain() {
 int approxZero(double z){
 	return (z < 0.0000001 && z > -0.0000001)? 1 : 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
